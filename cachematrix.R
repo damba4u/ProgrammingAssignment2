@@ -8,13 +8,15 @@
 ## This function creates a matrix object capable of caching its inverse
 makeCacheMatrix <- function(x = matrix()) {
  inverse_m <- NULL
-  set <- function(b) {
-    a <<- b
+  set <- function(y) {
+    x <<- y
     inverse_m <<- NULL
   }
-  get <- function() a
+  get <- function() x
   setinverse <- function(inverse) inverse_m <<- inverse
   getinverse <- function() inverse_m
+ ## The next command generates a list of the four categories generated above  and add names to the values.
+ ## This will make subsetting easier to understand
   list(set = set, get = get,
        setinverse = setinverse,
        getinverse = getinverse)
@@ -27,22 +29,26 @@ makeCacheMatrix <- function(x = matrix()) {
 ## If there is no change after calculating the matrix & matrix also maintained, the casheSolve retrieve the
 ## the inverse from the cache
 cacheSolve <- function(x, ...) {
-  inverse_m <- a$getinverse()
+ ## The next command assign the getinverse value to inverse_m
+ ## If is not equal to null, we pull the information the makeCacheMatrix
+  inverse_m <- x$getinverse()
   if(!is.null(inverse_m)) {
     message("getting cached data")
     return(inverse_m)
   }
-  data <- a$get()
+ ## The next commands assign the get in x to a data
+ ## The solve command is then used to calculate the inverse. That is, if it is not cache!
+  data <- x$get()
   inverse_m <- solve(data, ...)
-  a$setinverse(inverse_m)
+  x$setinverse(inverse_m)
   inverse_m
         
 }
 
 ## An example for confirmation of the functions!
-a <- matrix(5:8, nrow = 2, ncol = 2)
-b <- makeCacheMatrix(a)
-d <- cacheSolve(b)
+x <- matrix(5:8, nrow = 2, ncol = 2)
+y <- makeCacheMatrix(x)
+d <- cacheSolve(y)
 d
 ## matrix d printed out is the inverse of matrix a.
 ## The inverse matrix (d) is displayed below.
