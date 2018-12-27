@@ -38,3 +38,15 @@ cacheSolve <- function(x, ...) {
   inverse_m
         
 }
+
+## An example for confirmation of the functions!
+a <- matrix(5:8, nrow = 2, ncol = 2)
+b <- makeCacheMatrix(a)
+d <- cacheSolve(b)
+d
+## matrix d printed out is the inverse of matrix a.
+## The inverse matrix (d) is displayed below.
+
+     [,1] [,2]
+[1,]   -4  3.5
+[2,]    3 -2.5
